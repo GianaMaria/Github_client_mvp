@@ -3,23 +3,27 @@ package com.example.github_client.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.github_client.R
-import com.example.github_client.mvp.presenter.list.IUserListPresenter
+import com.example.github_client.mvp.model.image.IImageLoader
+import com.example.github_client.mvp.presenter.UsersPresenter
 import com.example.github_client.mvp.view.list.UserItemView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_user.view.*
 
-class UsersRVAdapter(private val presenter: IUserListPresenter) :
-    RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
+class UsersRVAdapter(val presenter: UsersPresenter.UsersListPresenter, val imageLoader: IImageLoader<ImageView>) : RecyclerView.Adapter<UsersRVAdapter.ViewHolder>() {
 
-    inner class ViewHolder(override val containerView: View) :
-        RecyclerView.ViewHolder(containerView),
+    inner class ViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer, UserItemView {
         override var pos = -1
 
         override fun setLogin(text: String) = with(containerView) {
             tv_login.text = text
+        }
+
+        override fun loadAvatar(url: String) = with(containerView) {
+            imageLoader.loadInto(url, iv_avatar)
         }
     }
 
