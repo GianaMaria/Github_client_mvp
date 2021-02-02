@@ -38,11 +38,11 @@ class UsersPresenter(
 
         usersListPresenter.itemClickListener = { itemView ->
             usersRepository
-                .getUserData(usersListPresenter.users[itemView.pos].login)
+                .getUserData(usersListPresenter.users[itemView.pos])
                 .observeOn(mainThreadScheduler)
                 .subscribe({
                     router.navigateTo(Screens.UserScreen(it))
-                },{
+                }, {
                     println("Error: ${it.message}")
                 })
         }
