@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.github_client.ApiHolder
 import com.example.github_client.App
 import com.example.github_client.R
+import com.example.github_client.mvp.model.cache.room.RepositoryCache
 import com.example.github_client.mvp.model.entity.GithubUser
+import com.example.github_client.mvp.model.entity.network.Network
+import com.example.github_client.mvp.model.entity.room.Database
 import com.example.github_client.mvp.model.repo.retrofit.RetrofitGithubRepositoryRepo
 import com.example.github_client.mvp.presenter.UserPresenter
 import com.example.github_client.mvp.view.UserView
@@ -28,7 +31,10 @@ class UserFragment(private val user: GithubUser) : MvpAppCompatFragment(), UserV
     private val presenter: UserPresenter by moxyPresenter {
         UserPresenter(
             AndroidSchedulers.mainThread(),
-            RetrofitGithubRepositoryRepo(ApiHolder().api),
+            RetrofitGithubRepositoryRepo(
+                ApiHolder().api, Network(App.instance),
+                RepositoryCache(Database.getInstance())
+            ),
             user,
             App.instance.router
         )
