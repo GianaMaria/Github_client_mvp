@@ -48,7 +48,7 @@ class UsersPresenter(
         }
     }
 
-    private fun loadData() {
+     fun loadData() {
         usersRepository.getUsers()
             .observeOn(mainThreadScheduler)
             .subscribe({ users ->
